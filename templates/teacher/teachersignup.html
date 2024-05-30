@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+{% load widget_tweaks %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <style>
+
+        form{
+           margin: 50px; 
+          
+        }
+        #alert{
+          color: red;
+          font-size: 15px;
+          text-align: center;
+        }
+        .container1{
+          background:#4B0082
+        }
+        .password-check::after{
+          content: "";
+      }
+      .password-check{
+          display: flex;
+          color: #FAEBD7;
+          font-weight: bold;
+      }
+
+    </style>
+  </head>
+  <body class="container1">
+    {% include "examination/navbar.html" %}
+ 
+
+
+<br><br><br>
+<div class="container">
+  <h3 style="text-align: center; color:#F08080">👩🏽‍🏫Teacher Signup Form👨🏽‍🏫</h3>
+<form method="POST" autocomplete="off" enctype="multipart/form-data" onsubmit="return validate()">
+    {% csrf_token %}
+    
+    <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="first_name" style="color:red"><strong>First Name*</strong></label>
+          {% render_field userForm.first_name|attr:'required:true'  class="form-control"  placeholder="First Name" style="background:#FFF8DC" %}
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="last_name" style="color:red"><strong>Last Name*</strong></label>
+          {% render_field userForm.last_name|attr:'required:true'  class="form-control" placeholder="Last Name" style="background:#FFF8DC" %}
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="gender" style="color:red"><strong>Gender*</strong></label>
+          {% render_field teacherForm.gender|attr:'required:true'  class="form-control"  placeholder="" style="background:#FFF8DC" %}
+        </div>
+      </div>
+       
+       
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="contact_no" style="color:red"><strong>Contact No*</strong></label>
+          {% render_field teacherForm.contact_no|attr:'required:true'  class="form-control" placeholder="Contact Number" style="background:#FFF8DC" %}
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="address" style="color:red"><strong>Address*</strong></label>
+          {% render_field teacherForm.address|attr:'required:true'  class="form-control" placeholder="Address" style="background:#FFF8DC" %}
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="username" style="color:red"><strong>Username*</strong></label>
+          {% render_field userForm.username|attr:'required:true'  class="form-control" placeholder="Username" style="background:#FFF8DC" %}
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="inputPassword4" style="color:red"><strong>Password*</strong></label>
+          {% render_field userForm.password|attr:'required:true'  class="form-control" placeholder="Password" id="password" style="background:#FFF8DC" %}
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="inputPassword4" style="color:red"><strong>Confirm Password*</strong></label>
+            <input name='confirm_password' class="form-control" type="password" 
+            id="confirm_password" placeholder="Confirm Password" style="background:#FFF8DC" onkeyup="check(this)" required>
+          </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <label for="profile_pic" style="color:red"><strong>Profile Picture*</strong></label>
+          {% render_field teacherForm.profile_pic|attr:'required:true' class="form-control" placeholder="" style="background:#FFF8DC" %}
+        </div>
+        
+      </div>
+
+
+    <button type="submit" class="btn btn-success" style="border-radius:0px;">Sign Up</button>
+    <button style="width: 80px; background:#DAA520; height:37px" type="button" onclick="toggle(this)">👁‍🗨</button>
+
+  </form>
+  <error id="alert"></error>
+</div>
+
+
+<br><br>
+{% include "examination/footer.html" %}
+  </body>
+  <script type="text/javascript">
+    var password = document.getElementById("password")
+    var confirm_password = document.getElementById("confirm_password")
+    var flag = 1
+    function toggle(el){
+      var type = password.getAttribute("type")
+      var type1 = confirm_password.getAttribute("type")
+      if(type=="password" && type1=="password"){
+       password.setAttribute("type","text")
+       confirm_password.setAttribute("type","text")
+       el.innerText = "🔒"
+      }
+      else{
+       password.setAttribute("type","password")
+       confirm_password.setAttribute("type","password")
+       el.innerText = "👁‍🗨"
+      }
+   }
+   function check(elem){
+    if(elem.value.length>0){
+      if(elem.value != password.value){
+         document.getElementById("alert").innerText="Confirm Password Doesn't match"
+         flag=0
+      }
+      else{
+        document.getElementById("alert").innerText=""
+        flag=1
+      }
+    }
+    else{
+      document.getElementById("alert").innerText="Please Enter Confirm Password"
+      flag=0
+    }
+   }
+   function validate(){
+    if(flag==1){
+      return true
+    }
+    else{
+      return false
+    }
+  }
+</script>
+</html>
